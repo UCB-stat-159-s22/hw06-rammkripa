@@ -1,0 +1,16 @@
+Metadata-Version: 2.1
+Name: ligotools
+Version: 0.3
+Summary: Tools to conduct ligo analysis
+Home-page: UNKNOWN
+Author: Ligo Scientific Collaboration (LSC) and Ram Mukund Kripa
+Author-email: ram.m.kripa@berkeley.edu
+License: BSD 3-Clause License
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 2
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=2.6
+
+UNKNOWN
+
