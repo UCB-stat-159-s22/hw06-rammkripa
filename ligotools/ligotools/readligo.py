@@ -512,3 +512,5 @@ def getsegs(start, stop, ifo, flag='DATA', filelist=None):
     return SegmentList(segList)
 
 
+def mytoy(i) :
+	return i + 1
