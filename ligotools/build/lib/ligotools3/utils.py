@@ -1,6 +1,5 @@
 import numpy as np
 from scipy.io import wavfile
-import matplotlib.pyplot as plt
 
 # function to whiten data
 def whiten(strain, interp_psd, dt):
@@ -36,14 +35,14 @@ def reqshift(data,fshift=100,sample_rate=4096):
     return z
 
 def make_plot_detector(det, time, timecomp, strain, pcolor, label_strain, lim_x=None, lim_y=None, template=None) :
-	plt.plot(time-timecomp,strain,pcolor,label=det+' '+label_strain)
+	plt.plot(time-timecomp,strain,pcolor,label=det+' whitened h(t)')
 	if template is not None :
-		plt.plot(time-timecomp,template,'k',label='Template(t)')
+		plt.plot(time-timecomp,template_match,'k',label='Template(t)')
 	if lim_y is not None :
 		plt.ylim(lim_y)
 	if lim_x is not None :
 		plt.xlim(lim_x)
 	plt.grid('on')
-	plt.xlabel('Time since {0:.4f}'.format(timecomp))
+	plt.xlabel('Time since {0:.4f}'.format(timemax))
 	plt.ylabel(label_strain)
 	plt.legend(loc='upper left')
