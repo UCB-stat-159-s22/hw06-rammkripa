@@ -674,7 +674,13 @@ if make_plots:
 # GW150914: First results from the search for binary black hole coalescence with Advanced LIGO,
 # The LIGO Scientific Collaboration, the Virgo Collaboration, http://arxiv.org/abs/1602.03839
 
-# In[15]:
+# In[ ]:
+
+
+
+
+
+# In[16]:
 
 
 # -- To calculate the PSD of the data, choose an overlap and a window (common to all detectors)
@@ -772,50 +778,27 @@ for det in dets:
             pcolor='r'
             strain_whitenbp = strain_H1_whitenbp
             template_H1 = template_match.copy()
+            
+        # vars used: det, time, timecomp, strain, pcolor, label_strain, lim_x, lim_y, template=None
 
         # -- Plot the result
         plt.figure(figsize=(10,8))
         plt.subplot(2,1,1)
-        plt.plot(time-timemax, SNR, pcolor,label=det+' SNR(t)')
-        #plt.ylim([0,25.])
-        plt.grid('on')
-        plt.ylabel('SNR')
-        plt.xlabel('Time since {0:.4f}'.format(timemax))
-        plt.legend(loc='upper left')
+        ut.make_plot_detector(det, time, timemax, SNR, pcolor, 'SNR(t)')
         plt.title(det+' matched filter SNR around event')
 
         # zoom in
         plt.subplot(2,1,2)
-        plt.plot(time-timemax, SNR, pcolor,label=det+' SNR(t)')
-        plt.grid('on')
-        plt.ylabel('SNR')
-        plt.xlim([-0.15,0.05])
-        #plt.xlim([-0.3,+0.3])
-        plt.grid('on')
-        plt.xlabel('Time since {0:.4f}'.format(timemax))
-        plt.legend(loc='upper left')
+        ut.make_plot_detector(det, time, timemax, SNR, pcolor, 'SNR(t)', lim_x = [-0.15, 0.05])
         plt.savefig('figurs/' + eventname+"_"+det+"_SNR."+plottype)
 
         plt.figure(figsize=(10,8))
         plt.subplot(2,1,1)
-        plt.plot(time-tevent,strain_whitenbp,pcolor,label=det+' whitened h(t)')
-        plt.plot(time-tevent,template_match,'k',label='Template(t)')
-        plt.ylim([-10,10])
-        plt.xlim([-0.15,0.05])
-        plt.grid('on')
-        plt.xlabel('Time since {0:.4f}'.format(timemax))
-        plt.ylabel('whitened strain (units of noise stdev)')
-        plt.legend(loc='upper left')
+        ut.make_plot_detector(det, time, tevent, strain_whitenbp, pcolor, 'whitened strain h(t)', [-0.15, 0.05], [-10, 10], template_match)
         plt.title(det+' whitened data around event')
 
         plt.subplot(2,1,2)
-        plt.plot(time-tevent,strain_whitenbp-template_match,pcolor,label=det+' resid')
-        plt.ylim([-10,10])
-        plt.xlim([-0.15,0.05])
-        plt.grid('on')
-        plt.xlabel('Time since {0:.4f}'.format(timemax))
-        plt.ylabel('whitened strain (units of noise stdev)')
-        plt.legend(loc='upper left')
+        ut.make_plot_detector(det, time, tevent, strain_whitenbp - template_match, pcolor, 'whitened strain residual', [-0.15, 0.05], [-10, 10])
         plt.title(det+' Residual whitened data after subtracting template around event')
         plt.savefig('figurs/' + eventname+"_"+det+"_matchtime."+plottype)
                  
@@ -847,7 +830,7 @@ for det in dets:
 # 
 # Make wav (sound) files from the filtered, downsampled data, +-2s around the event.
 
-# In[16]:
+# In[17]:
 
 
 # make wav (sound) files from the whitened data, +-2s around the event.
@@ -876,7 +859,7 @@ write_wavfile(eventname+"_template_whiten.wav",int(fs), template_p_smooth[indxt]
 # 
 # With good headphones, you may be able to hear a faint thump in the middle; that's our signal!
 
-# In[17]:
+# In[18]:
 
 
 from IPython.display import Audio
@@ -886,7 +869,7 @@ print(fna)
 Audio(fna)
 
 
-# In[18]:
+# In[19]:
 
 
 fna = 'audio/' + eventname+"_H1_whitenbp.wav"
@@ -900,7 +883,7 @@ Audio(fna)
 # 
 # The code below will shift the data up by 400 Hz (by taking an FFT, shifting/rolling the frequency series, then inverse fft-ing). The resulting sound file will be noticibly more high-pitched, and the signal will be easier to hear.
 
-# In[19]:
+# In[20]:
 
 
 
@@ -925,7 +908,7 @@ write_wavfile(eventname+"_template_shifted.wav",int(fs), template_p_shifted[indx
 
 # ### Listen to the frequency-shifted template and data
 
-# In[20]:
+# In[21]:
 
 
 fna = 'audio/' + eventname+"_template_shifted.wav"
@@ -933,7 +916,7 @@ print(fna)
 Audio(fna)
 
 
-# In[21]:
+# In[22]:
 
 
 fna = 'audio/' + eventname+"_H1_shifted.wav"
@@ -949,7 +932,7 @@ Audio(fna)
 # 
 # We also unpack the DQ and HW injection bits to check what their values are.
 
-# In[22]:
+# In[23]:
 
 
 data_segments = 1
@@ -1003,7 +986,7 @@ if data_segments:
 
 # ## Construct a csv file containing the whitened data and template
 
-# In[23]:
+# In[24]:
 
 
 # time vector around event
